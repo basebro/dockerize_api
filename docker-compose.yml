@@ -11,7 +11,7 @@ services:
     image: nginx:1.15.3-alpine
     restart: on-failure
     volumes:
-      - './apps/user-api/public/:/usr/src/app'
+      - './apps/user-api/:/usr/src/app'
       - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
     ports:
       - '8090:80'
@@ -23,5 +23,4 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     restart: on-failure
-    env_file:
-      - .env
+    env_file: ./apps/user-api/.env
