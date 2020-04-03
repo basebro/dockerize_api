@@ -17,8 +17,12 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && mv composer /usr/local/bin/composer
 
-WORKDIR /usr/src/app
+COPY apps/user-api/ /usr/src/app
 
-COPY apps/user-api /usr/src/app
+WORKDIR /usr/src/app/
+
+RUN php /usr/local/bin/composer install --no-progress --no-interaction --prefer-dist --no-suggest --optimize-autoloader
 
 RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
+
+CMD ["php-fpm"]
